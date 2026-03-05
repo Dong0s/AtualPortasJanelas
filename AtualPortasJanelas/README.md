@@ -25,16 +25,18 @@ Rotas principais:
 
 ## Funcionalidades implementadas
 
-- Header fixo com menu desktop/mobile
+- Header fixo com menu responsivo desktop/mobile (breakpoint: md)
 - Logo do header com ícone de porta minimalista/moderno (com proporção ajustada ao bloco do logo)
 - Navegação SPA com React Router
-- Seção hero com imagem e CTAs
-- Destaque de diferenciais da empresa
+- Seção hero totalmente responsiva com altura dinâmica em mobile
+- Destaque de diferenciais da empresa com grid adaptativo
 - Listagem de produtos com dados locais (`src/data/products.ts`)
-- Filtro de produtos por categoria na página de catálogo
-- Cards de produto com CTA de orçamento via WhatsApp
-- Página de contato com múltiplos canais
+- Filtro de produtos por categoria com suporte a múltiplas linhas em mobile
+- Cards de produto com CTA de orçamento via WhatsApp (altura consistente)
+- Página de contato com múltiplos canais e clique otimizado para mobile
 - Página 404 para rotas inexistentes
+- **Suporte completo para dispositivos móveis e tablets**
+- Progressive Web App (PWA) com manifest.json
 
 ## Estrutura do projeto
 
@@ -68,6 +70,92 @@ Principais arquivos:
 
 - `src/index.css` -> design tokens (cores, fontes, gradientes, sombras)
 - `tailwind.config.ts` -> extensões de tema, animações e fontes
+
+## 📱 Responsividade e Suporte Mobile
+
+A aplicação foi **completamente portada para funcionar perfeitamente em dispositivos móveis, tablets e desktops**.
+
+### Breakpoints utilizados (Tailwind CSS)
+
+- **sm** (640px) - Smartphones landscape e tablets pequenos
+- **md** (768px) - Tablets e navegação desktop
+- **lg** (1024px) - Desktops médios
+- **xl** (1280px) - Desktops grandes
+
+### Otimizações implementadas
+
+#### 1. **Header e Navegação**
+- Menu hamburger em mobile (toca/clica para abrir)
+- Tamanhos de ícone escalonados (reduzidos em mobile)
+- Padding responsivo em todas as resoluções
+- Links com touch targets maiores (mínimo 44px para mobile)
+
+#### 2. **Seções e Layout**
+- Hero section com altura dinâmica (min-height em mobile, viewport em desktop)
+- Padding e margin escalonados por dispositivo
+- Grid responsivo: 1 coluna mobile → 2 colunas tablet → 3 colunas desktop
+- Texto com tamanhos responsivos (text-sm/text-base/text-lg/text-xl)
+
+#### 3. **Componentes**
+- **ProductCard**: Altura consistente com flexbox, imagens otimizadas com aspect-square
+- **ContactItems**: Clique cômodo em mobile, ícones responsivos, texto com word-break
+- **Buttons**: Largura total em mobile, width-auto em desktop
+
+#### 4. **Meta tags para Mobile**
+- `viewport-fit=cover` para notch support (iPhone)
+- `apple-mobile-web-app-capable` para experiência PWA
+- `format-detection=telephone=no` para evitar links telefônicos indesejados
+- `color-scheme` para modo claro/escuro do navegador
+
+#### 5. **PWA (Progressive Web App)**
+- `public/manifest.json` configurado para instalação do app
+- Ícones em SVG para todos os tamanhos (192x192, 512x512)
+- Suporte a shortcuts rápidos (Ver Produtos, Entre em Contato)
+- Identificação de categoria (`shopping`)
+
+### Testes de Responsividade
+
+Para testar em diferentes dispositivos:
+
+```bash
+npm run dev
+```
+
+Abra na DevTools do navegador:
+- **Ctrl + Shift + M** (Windows/Linux) ou **Cmd + Shift + M** (Mac) para toggle device toolbar
+- Teste em resoluções: 375px (mobile), 768px (tablet), 1920px (desktop)
+
+Dispositivos recomendados para teste:
+- iPhone 12/13/14 (390px)
+- Samsung Galaxy S21 (360px)
+- iPad (768px)
+- iPad Pro (1024px)
+
+### Performance em Mobile
+
+- Imagens com `loading="lazy"` para lazy loading
+- Transições CSS otimizadas (não usar `transform: scale()` em hover em mobile)
+- Sem hover effects primários em mobile (usar Active states)
+- Fonts Montserrat e Open Sans pré-carregadas
+
+### Suporte a Dispositivos
+
+✅ **Testado e otimizado para:**
+- iPhone 5S+ (320px em diante)
+- Android 5+ (320px em diante)
+- iPad + iPad Pro
+- Tablets Android 7"+
+- Desktops e Laptops
+
+### Troubleshooting Mobile
+
+Se enfrentar problemas em mobile:
+
+1. **Viewport não funciona**: Verifique `index.html` > `<meta name="viewport">`
+2. **Texto muito pequeno**: Tailwind está aplicando `sm:` corretamente? Verifique em DevTools
+3. **Botões difíceis de clicar**: Touch target mínimo é 44x44px (verifique com Lighthouse)
+4. **Imagens cortadas**: Verifique `object-cover` e aspect-ratio em ProductCard
+
 
 ## Requisitos
 
@@ -122,4 +210,4 @@ Checklist mínimo por alteração:
 
 ---
 
-Última atualização do README: 2026-03-04
+Última atualização do README: 2026-03-05 - Implementação completa de responsividade mobile

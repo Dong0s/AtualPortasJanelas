@@ -15,24 +15,24 @@ const Produtos = () => {
     <div className="min-h-screen">
       <Header />
 
-      <section className="pt-28 pb-20">
+      <section className="pt-20 sm:pt-24 md:pt-28 pb-12 sm:pb-16 md:pb-20">
         <div className="container mx-auto px-4">
-          <div className="text-center mb-12">
-            <h1 className="font-heading font-black text-4xl md:text-5xl text-foreground mb-3">
+          <div className="text-center mb-8 sm:mb-10 md:mb-12">
+            <h1 className="font-heading font-black text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-foreground mb-2 sm:mb-3">
               Nossos <span className="text-primary">Produtos</span>
             </h1>
-            <p className="text-muted-foreground max-w-xl mx-auto">
+            <p className="text-muted-foreground text-sm sm:text-base max-w-xl mx-auto">
               Explore nossa linha completa de portas e janelas com qualidade e design.
             </p>
           </div>
 
           {/* Filter */}
-          <div className="flex justify-center gap-3 mb-10">
+          <div className="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8 sm:mb-10 md:mb-12">
             {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setFilter(cat)}
-                className={`font-heading font-semibold text-sm px-6 py-2.5 rounded-full transition-all ${
+                className={`font-heading font-semibold text-xs sm:text-sm px-4 sm:px-6 py-2 sm:py-2.5 rounded-full transition-all ${
                   filter === cat
                     ? "bg-primary text-primary-foreground"
                     : "bg-muted text-muted-foreground hover:bg-primary/10"
@@ -43,7 +43,7 @@ const Produtos = () => {
             ))}
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
             {filtered.map((p) => (
               <ProductCard key={p.id} {...p} />
             ))}
