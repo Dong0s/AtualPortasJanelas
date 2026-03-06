@@ -1,9 +1,11 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Shield, Award, Wrench } from "lucide-react";
 import heroBg from "@/assets/hero-bg.jpg";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
+import { Carousel, CarouselApi, CarouselContent, CarouselItem } from "@/components/ui/carousel";
 import { products } from "@/data/products";
 
 const features = [
@@ -25,6 +27,23 @@ const features = [
 ];
 
 const Index = () => {
+  const [productsCarouselApi, setProductsCarouselApi] = useState<CarouselApi>();
+  const [isProductsAutoplayPaused, setIsProductsAutoplayPaused] = useState(false);
+
+  useEffect(() => {
+    if (!productsCarouselApi || isProductsAutoplayPaused) {
+      return;
+    }
+
+    const intervalId = window.setInterval(() => {
+      productsCarouselApi.scrollNext();
+    }, 4500);
+
+    return () => {
+      window.clearInterval(intervalId);
+    };
+  }, [productsCarouselApi, isProductsAutoplayPaused]);
+
   return (
     <div className="min-h-screen">
       <Header />
@@ -103,10 +122,27 @@ const Index = () => {
               Conheça nossa linha completa de portas e janelas em alumínio com acabamento premium.
             </p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
-            {products.slice(0, 3).map((p) => (
-              <ProductCard key={p.id} {...p} />
-            ))}
+          <div
+            className="px-1"
+            onMouseEnter={() => setIsProductsAutoplayPaused(true)}
+            onMouseLeave={() => setIsProductsAutoplayPaused(false)}
+            onTouchStart={() => setIsProductsAutoplayPaused(true)}
+            onTouchEnd={() => setIsProductsAutoplayPaused(false)}
+          >
+            <Carousel
+              setApi={setProductsCarouselApi}
+              opts={{ align: "start", loop: true }}
+              className="w-full"
+              aria-label="Carrossel de produtos"
+            >
+              <CarouselContent>
+                {products.map((p) => (
+                  <CarouselItem key={p.id} className="basis-full sm:basis-1/2 lg:basis-1/3">
+                    <ProductCard {...p} />
+                  </CarouselItem>
+                ))}
+              </CarouselContent>
+            </Carousel>
           </div>
           <div className="text-center mt-10 sm:mt-12">
             <Link
